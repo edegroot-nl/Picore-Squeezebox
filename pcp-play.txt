@@ -1,0 +1,112 @@
+#!/bin/bash
+
+##
+#
+# example ./pcp.sh nporadio2 pcp01 10
+#  nporadio2 = stationid
+#  pcp01 = picoreplayerid
+#  10 = volume
+#
+##
+
+#basic instellingen
+CURL=/usr/bin/curl
+URL="http://url-to-lms:9000/jsonrpc.js"
+mac=$2
+volume=$3
+
+#picoreplayerid's (macaddress)
+
+case "$2" in
+ pcp01)
+ mac=xx:xx:xx:xx:xx:xx
+ ;;
+ pcp02)
+ mac=xx:xx:xx:xx:xx:xx
+ ;;
+ pcp03)
+ mac=xx:xx:xx:xx:xx:xx
+ ;;
+ pcp04)
+ mac=xx:xx:xx:xx:xx:xx
+ ;;
+ pcp05)
+ mac=xx:xx:xx:xx:xx:xx
+;;
+esac
+
+#volume
+
+ case "$3" in
+ 5)
+volume=5
+;;
+ 10)
+volume=10
+;;
+ 15)
+volume=15
+;;
+ 20)
+volume=20
+;;
+ 25)
+volume=25
+;;
+ 30)
+volume=30
+;;
+ 35)
+volume=35
+;;
+ 40)
+volume=40
+;;
+ 45)
+volume=45
+;;
+ 50)
+volume=50
+;;
+ *)
+volume=20
+;;
+esac
+
+# stationid's
+
+case "$1" in
+
+  list)
+echo "favorites"
+echo "nporadio2"
+;;
+
+  favorites)
+ID=xxx
+$CURL $URL --data-binary '{"id":1,"method":"slim.request","params":["'$mac'",["playlistcontrol", "cmd:load", "playlist_id:'$ID'"]]}'
+sleep 1
+$CURL $URL --data-binary '{"id":1,"method":"slim.request","params":["'$mac'",["mixer","volume"," '$volume'"]]}'
+;;
+
+  nporadio2)
+ID=xxx
+$CURL $URL --data-binary '{"id":1,"method":"slim.request","params":["'$mac'",["playlistcontrol", "cmd:load", "playlist_id:'$ID'"]]}'
+sleep 1
+$CURL $URL --data-binary '{"id":1,"method":"slim.request","params":["'$mac'",["mixer","volume"," '$volume'"]]}'
+
+
+ xxxx)
+ID=xxx
+$CURL $URL --data-binary '{"id":1,"method":"slim.request","params":["'$mac'",["playlistcontrol", "cmd:load", "playlist_id:'$ID'"]]}'
+sleep 1
+$CURL $URL --data-binary '{"id":1,"method":"slim.request","params":["'$mac'",["mixer","volume"," '$volume'"]]}'
+;;
+
+
+  *)
+
+    echo "Usage: $0 {stationid player(pcpxx) volume (5-50), full station list with option "list"}" >&2
+    exit 1
+    ;;
+esac
