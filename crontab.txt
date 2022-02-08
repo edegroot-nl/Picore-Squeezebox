@@ -5,4 +5,4 @@
 
 #picoreplayer02
 0 9,16,22 * * * bash /path/to/./pcp-play.sh favorites pcp02 20 >/dev/null 2>&1
-0 6,12 * * * bash /path/to/./pcp-play.sh nporadio2 pcp02 20 >/dev/null 2>&1
+0 6,12,20 * * * bash /path/to/./pcp-play.sh nporadio2 pcp02 20 >/dev/null 2>&1
